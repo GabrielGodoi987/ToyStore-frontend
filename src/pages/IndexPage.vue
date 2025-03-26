@@ -9,7 +9,7 @@
 
 <script lang="ts" setup>
 
-const msg = "Hello world!";
+
 </script>
 <style>
 </style>
