@@ -1,15 +1,14 @@
-<template>
-    <div>
-        <h1 class="text-3xl font-bold">
-            {{ msg }}
-        </h1>
+<script lang="ts" setup>
+    import LoginPage from './AuthPage/LoginPage.vue';
+</script>
 
-    </div>
+<template>
+        <LoginPage />
 </template>
 
-<script lang="ts" setup>
 
-const msg = "Hello world!";
-</script>
 <style>
+template{
+backgorund-color: #213547;
+}
 </style>
