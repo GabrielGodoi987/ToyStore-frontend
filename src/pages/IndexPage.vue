@@ -1,15 +1,11 @@
 <template>
     <div>
-        <h1 class="text-3xl font-bold">
-            {{ msg }}
-        </h1>
-
+        <GroupPage />
     </div>
 </template>
 
 <script lang="ts" setup>
-
-const msg = "Hello world!";
+import GroupPage from "./GroupPages/GroupPages.vue";
 </script>
 <style>
 </style>
