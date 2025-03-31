@@ -1,14 +1,5 @@
 <template>
     <div>
-       
-        <button @click="togleDarkLightMode"
-            class="px-4 py-2 rounded-2xl shadow-md font-semibold text-white transition-all duration-300 ease-in-out"
-            :class="isDarkOrLight
-                ? 'bg-slate-950'
-                : 'bg-secondary'">
-            {{ isDarkOrLight ? "Modo escuro" : "Modo claro" }}
-        </button>
-    </div>
     <div>
         <RouterView />
     </div>
