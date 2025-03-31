@@ -7,7 +7,7 @@ export const routes: RouteRecordRaw[] = [
         component: () => import("../layouts/GroupLayout.vue"),
         children: [
             {
-                path: "",
+                path: "/",
                 component: () => import("../pages/IndexPage.vue")
             }
         ]

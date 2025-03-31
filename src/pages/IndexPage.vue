@@ -7,5 +7,3 @@
 <script lang="ts" setup>
 import GroupPage from "./GroupPages/GroupPages.vue";
 </script>
-<style>
-</style>
