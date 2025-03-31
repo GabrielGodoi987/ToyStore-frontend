@@ -1,7 +1,7 @@
 <template>
   <div class="flex fixed inset-0 w-screen h-screen bg-gray-900 text-white">
     <aside class="w-1/5 bg-gray-900 p-6 flex flex-col gap-4">
-      <img src="" alt="Logo Disney">
+      <img src="/src/assets/images/disneyLogo.png" alt="Logo Disney">
       <nav class="flex flex-col gap-2">
         
         <div class="p-3 transition-colors rounded text-left hover:bg-green-800 ">
@@ -25,16 +25,45 @@
     
     <!-- Main Content -->
     <main class="w-4/5 bg-white p-10 text-gray-900 rounded-l-lg">
-      <h2 class="text-3xl font-bold mb-6">Sobre a equipe</h2>
-      <div class="grid grid-cols-3 gap-8">
-        <div v-for="index in 6" :key="index" class="flex flex-col items-center">
-          <div class="w-35 h-35 bg-blue-600 rounded-full flex items-center justify-center shadow-lg">
-            <img src="/src/assets/images/UserAvatar.avif" alt="">
-          </div>
-          <p class="mt-3 text-lg font-medium">Membro</p>
-        </div>
+  <h2 class="text-3xl font-bold mb-6">Sobre a equipe</h2>
+  <div class="grid grid-cols-3 gap-8">
+    <div class="flex flex-col items-center">
+      <div class="w-32 h-32 bg-blue-600 rounded-full flex items-center justify-center shadow-lg">
+        <img src="/src/assets/images/UserAvatar.avif" alt="">
       </div>
-    </main>
+      <p class="mt-3 text-lg font-medium">Rafael Mascarenhas</p>
+    </div>
+    
+    <div class="flex flex-col items-center">
+      <div class="w-32 h-32 bg-blue-600 rounded-full flex items-center justify-center shadow-lg">
+        <img src="/src/assets/images/UserAvatar.avif" alt="">
+      </div>
+      <p class="mt-3 text-lg font-medium">Gabriel Godoi</p>
+    </div>
+    
+    <div class="flex flex-col items-center">
+      <div class="w-32 h-32 bg-blue-600 rounded-full flex items-center justify-center shadow-lg">
+        <img src="/src/assets/images/UserAvatar.avif" alt="">
+      </div>
+      <p class="mt-3 text-lg font-medium">Eduarda</p>
+    </div>
+    
+    <div class="flex flex-col items-center">
+      <div class="w-32 h-32 bg-blue-600 rounded-full flex items-center justify-center shadow-lg">
+        <img src="/src/assets/images/UserAvatar.avif" alt="">
+      </div>
+      <p class="mt-3 text-lg font-medium">Lindalva</p>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <div class="w-32 h-32 bg-blue-600 rounded-full flex items-center justify-center shadow-lg">
+        <img src="/src/assets/images/UserAvatar.avif" alt="">
+      </div>
+      <p class="mt-3 text-lg font-medium">Vitor Tavares</p>
+    </div>
+  </div>
+</main>
+
   </div>
 </template>
 
