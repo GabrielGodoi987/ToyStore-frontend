@@ -8,7 +8,7 @@ export const routes: RouteRecordRaw[] = [
       {
         name: "home",
         path: "",
-        component: () => import("../pages/IndexPage.vue"),
+        component: () => import("../pages/public/IndexPage.vue"),
       },
     ],
   },
@@ -18,12 +18,16 @@ export const routes: RouteRecordRaw[] = [
     children: [
       {
         path: "catalogo",
-        component: () => import("../pages/CategoryPage.vue"),
+        component: () => import("../pages/public/CategoryPage.vue"),
       },
       {
         path: "categorias/:categoryId",
-        component: () => import("../pages/ToysPage.vue"),
+        component: () => import("../pages/public/ToysPage.vue"),
       },
+      {
+        path: "team",
+        component: () => import("../pages/public/GroupPage.vue"),
+      }
     ],
   },
   {
@@ -32,9 +36,20 @@ export const routes: RouteRecordRaw[] = [
     children: [
       {
         path: "",
+        component: () => import("../pages/adminPages/AdminIndexPage.vue"),
+      },
+      {
+        path: "categorymanagement",
         component: () => import("../pages/adminPages/AdminCategoryPage.vue"),
+      },
+      {
+        path: "toysmanagement",
+        component: () => import("../pages/adminPages/AdminToyPage.vue"),
+      },
+      {
+        path: "adminusermanagement",
+        component: () => import("../pages/adminPages/AdminUserPage.vue"),
       },
     ],
   },
 ];
-

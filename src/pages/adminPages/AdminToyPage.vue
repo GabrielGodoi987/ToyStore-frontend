@@ -1,7 +1,6 @@
 <template>
-    <h1 class="text-xl font-bold mb-4">Gerenciamento de categorias</h1>
+    <h1 class="text-2xl font-bold mb-4">Gerenciamento de Brinquedos</h1>
     <div class="p-6 bg-white rounded-lg shadow-md">
-
         <div class="overflow-x-auto">
             <table class="w-full border-collapse">
                 <thead>
@@ -48,11 +47,11 @@
         </div>
     </div>
 
-    <!-- criação de categoria -->
+    <!-- botão para criação de Brinquedo -->
     <section>
         <button type="button"
             class="mt-10 p-4 w-[250px] rounded-3xl text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-blue-800">
-            Adicionar Categoria
+            Adicionar Brinquedo
         </button>
     </section>
 </template>

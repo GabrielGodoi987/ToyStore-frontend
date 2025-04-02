@@ -2,27 +2,21 @@ import type { IMenu } from "../../interfaces/IMenu";
 
 export const menuConfig: IMenu[] = [
   {
-    label: "Home",
-    description: "Página inicial",
-    icon: "home",
-    link: "/",
+    label: "category",
+    description: "category management",
+    icon: "category",
+    link: "/admin/categorymanagement",
   },
   {
-    label: "Catalogo",
-    description: "Explorar brinquedos",
-    icon: "explore",
-    link: "/explore/catalogo",
+    label: "Toys",
+    description: "Toys management",
+    icon: "shopping_cart",
+    link: "/admin/toysmanagement",
   },
   {
-    label: "Administração",
-    description: "Gerenciar brinquedos",
-    icon: "admin_panel_settings",
-    link: "/admin",
-  },
-  {
-    label: "Equipe",
-    description: "Conheça nossa equipe",
-    icon: "people",
-    link: "/",
-  },
+    label: "user",
+    description: "Usuários",
+    icon: "people management",
+    link: "/admin/adminusermanagement",
+  }
 ];

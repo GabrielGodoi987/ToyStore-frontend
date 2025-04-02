@@ -5,7 +5,7 @@
             <!-- Logo -->
             <img src="../assets/logo.png" alt="ToyStore Logo" class="mb-8 h-30 w-auto mx-auto p-2" />
             <ul class="flex flex-col space-y-4 text-left">
-                <li class="flex items-center space-x-4" v-for="(i, index) in menuConfig" :key="index">
+                <li class="flex items-center space-x-4" v-for="(i, index) in PublicmenuConfig" :key="index">
                     <i class="fas fa-home text-white ml-4"></i> <!-- Ícone Home do FontAwesome -->
                     <router-link :to="i.link" style="color: white;"
                         class="hover:bg-gray-700 p-2 rounded block text-xl">{{i.label}}</router-link>
@@ -23,5 +23,6 @@
 </template>
 
 <script lang="ts" setup>
-import { menuConfig } from './MenuConfig/config.config';
+import { PublicmenuConfig } from './MenuConfig/publicConfig.config';
+
 </script>

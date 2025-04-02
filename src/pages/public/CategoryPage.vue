@@ -11,8 +11,8 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue';
 import CategoriaCard from '../components/CategoriaCard.vue';
-import { CategoryService } from '../services/CategoryService';
-import type { ICategory } from '../interfaces/ICategory';
+import { CategoryService } from '../../services/CategoryService';
+import type { ICategory } from '../../interfaces/ICategory';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
