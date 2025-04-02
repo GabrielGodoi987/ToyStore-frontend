@@ -43,22 +43,4 @@
 <script setup lang="ts">
 import ProductCard from "../components/ProductCard.vue";
 import { menuConfig } from '../layouts/MenuConfig/config.config';
-
-// Dados fictícios dos produtos
-const products = [
-  { id: 1, name: 'Brinquedo Woody', price: 'R$ 89,99', image: '/src/assets/woody.avif' },
-  { id: 2, name: 'Brinquedo Buzz Lightyear', price: 'R$ 99,99', image: '/src/assets/buzz.webp' },
-  { id: 3, name: 'Brinquedo Jessie', price: 'R$ 79,99', image: '/src/assets/jessie.jpg' },
-  { id: 4, name: 'Brinquedo Dinossauro Rex', price: 'R$ 69,99', image: '/src/assets/rex.jpg' }
-];
 </script>
-
-<style scoped>
-nav ul li {
-  cursor: pointer;
-}
-
-nav ul li:hover {
-  color: yellow;
-}
-</style>

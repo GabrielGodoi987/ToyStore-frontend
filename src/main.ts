@@ -1,4 +1,4 @@
-import './boot/Axios';
+import "./boot/Axios"
 import { createApp } from "vue";
 import "./style.css";
 import "./css/tailwind.variables.css";
