@@ -1,9 +1,9 @@
 <template>
     <transition name="fade">
-        <div v-if="modelValue" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div v-if="modelValue" class="fixed inset-0 flex items-center justify-center bg-opacity-50 z-50">
             <div class="bg-white w-full max-w-md p-6 rounded-lg shadow-lg relative">
                 <!-- Botão de Fechar -->
-                <button @click="closeDialog" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800">
+                <button @click="modelValue = false" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800">
                     ✖
                 </button>
 
@@ -17,12 +17,14 @@
     </transition>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { defineProps, defineEmits } from 'vue';
+defineOptions({
+    name: 'DialogComponent'
+});
 defineProps({
     title: String
 });
-
 const modelValue = defineModel({ type: Boolean });
 </script>
 

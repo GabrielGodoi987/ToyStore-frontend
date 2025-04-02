@@ -26,7 +26,7 @@ export class CategoryService {
     // Logic to add a new category
     try {
       const response = await this.api.post(this.route, category);
-      return response.data;
+      return response;
     } catch (error) {
       console.error("Error adding category:", error);
       throw error;
