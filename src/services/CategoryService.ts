@@ -12,23 +12,63 @@ export class CategoryService {
 
   // Define your methods and properties here
   async getCategories() {
-    return await this.api.get(this.route);
+    try {
+      const response = await this.api.get(this.route);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      throw error;
+    }
   }
 
   // enviar multipart/form-data para cadastrar todas as imagens que desejamos enviar
   async addCategory(category: ICategory) {
     // Logic to add a new category
-    return await this.api.post(this.route, category, {});
+    try {
+      const response = await this.api.post(this.route, category);
+      return response.data;
+    } catch (error) {
+      console.error("Error adding category:", error);
+      throw error;
+    }
   }
 
-  updateCategory(categoryId: number, updatedData: ICategory) {
+  async updateCategory(categoryId: number, updatedData: ICategory) {
     // Logic to update an existing category
+    try {
+      const response = await this.api.put(
+        `${this.route}/${categoryId}`,
+        updatedData
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error updating category:", error);
+      throw error;
+    }
   }
 
-  deleteCategory(categoryId: number) {
-    // Logic to delete a category
+  async deleteCategory(categoryId: number) {
+    try {
+      const response = await this.api.delete(`${this.route}/${categoryId}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error deleting category:", error);
+      throw error;
+    }
   }
-  deleteManyCategories(categoryIds: number[]) {
+  async deleteManyCategories(categoryIds: number[]) {
     // Logic to delete multiple categories
+    try {
+      const response = await this.api.delete(this.route, {
+        data: {
+          ids: categoryIds,
+        },
+      });
+
+      response.data;
+    } catch (error) {
+      console.error("Error deleting categories:", error);
+      throw error;
+    }
   }
 }

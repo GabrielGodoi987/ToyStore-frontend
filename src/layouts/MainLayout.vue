@@ -1,39 +1,27 @@
 <template>
-    <div>
-        
-        <button @click="togleDarkLightMode"
-            class="px-4 py-2 rounded-2xl shadow-md font-semibold text-white transition-all duration-300 ease-in-out"
-            :class="isDarkOrLight
-                ? 'bg-slate-950'
-                : 'bg-secondary'">
-            {{ isDarkOrLight ? "Modo escuro" : "Modo claro" }}
-        </button>
-    </div>
-    <div>
-        <RouterView />
+    <div class="flex min-h-screen bg-[#162456]">
+        <!-- Menu Lateral -->
+        <div class="w-60 bg-[#162456] text-white min-h-screen flex flex-col p-4">
+            <!-- Logo -->
+            <img src="../assets/logo.png" alt="ToyStore Logo" class="mb-8 h-30 w-auto mx-auto p-2" />
+            <ul class="flex flex-col space-y-4 text-left">
+                <li class="flex items-center space-x-4" v-for="(i, index) in menuConfig" :key="index">
+                    <i class="fas fa-home text-white ml-4"></i> <!-- Ícone Home do FontAwesome -->
+                    <router-link :to="i.link" style="color: white;"
+                        class="hover:bg-gray-700 p-2 rounded block text-xl">{{i.label}}</router-link>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Área de Conteúdo -->
+        <div class="flex-1 p-10 flex flex-col min-h-screen">
+            <div class="bg-white p-8 rounded-2xl shadow-lg flex-1">
+                <router-view />
+            </div>
+        </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-
-
-const isDarkOrLight = ref<boolean>(false);
-const currentTheme = ref<'dark' | 'light'>('dark');
-const togleDarkLightMode = () => {
-    isDarkOrLight.value = !isDarkOrLight.value;
-    if (currentTheme.value == 'dark') {
-        currentTheme.value = 'light'
-    } else {
-        currentTheme.value = 'dark';
-    }
-    document.documentElement.style.setProperty('--color-theme', currentTheme.value)
-}
-
+import { menuConfig } from './MenuConfig/config.config';
 </script>
-
-<style>
-:root {
-    color-scheme: var(--color-theme);
-}
-</style>

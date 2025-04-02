@@ -1,35 +1,32 @@
 <template>
-  <div 
-    @click="irParaCategoria" 
-    class="bg-gray-50 p-4 rounded-lg shadow-md text-center cursor-pointer hover:bg-gray-200 transition w-[280px] h-[340px] flex flex-col items-center justify-between"> 
-    <!-- Ajustado para dimensões fixas e o flex ajustado -->
-    <img :src="getImagemSrc(categoria.imagem)" alt="Imagem da categoria" class="w-full h-[200px] object-cover rounded-md mb-4">
-    <h3 class="text-xl font-semibold">{{ categoria.nome }}</h3>
-    <p class="text-gray-600">{{ categoria.descricao }}</p>
+  <div @click="handleClick"
+    class="bg-white p-4 rounded-lg shadow-md text-center cursor-pointer hover:bg-gray-100 transition w-[280px] h-[340px] flex flex-col items-center justify-between">
+    <!-- Imagem do boneco -->
+    <img :src="image || 'https://cdn.quasar.dev/img/mountains.jpg'" alt=" Imagem da categoria"
+      class="w-full h-[200px] object-cover rounded-md mb-4" />
+    <!-- Nome da categoria -->
+    <h3 class="text-xl font-semibold">{{ name }}</h3>
+    <!-- Descrição da categoria 
+    <p class="text-gray-600">Brinquedos colecionáveis e muito mais.</p>
+    -->
   </div>
 </template>
 
-<script lang="ts">
-import { useRouter } from 'vue-router';
-
-export default {
-  props: {
-    categoria: Object
+<script lang="ts" setup>
+const props = defineProps({
+  id: Number,
+  name: {
+    type: String,
+    required: true
   },
-  setup(props) {
-    const router = useRouter();
+  image: String
+});
 
-    const irParaCategoria = () => {
-      const categoriaFormatada = props.categoria.nome.toLowerCase().replace(/\s+/g, "-"); // Transforma "Quebra Cabeça" em "quebra-cabeca"
-      router.push(`/categorias/${categoriaFormatada}`);
-    };
+const emit = defineEmits<{
+  (e: 'navigate', id: any): void;
+}>();
 
-    return { irParaCategoria };
-  },
-  methods: {
-    getImagemSrc(imagem: string) {
-      return new URL(`../assets/images/${imagem}`, import.meta.url).href;
-    }
-  }
+const handleClick = () => {
+  emit('navigate', props.id);
 };
 </script>

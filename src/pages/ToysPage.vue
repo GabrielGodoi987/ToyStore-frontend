@@ -5,8 +5,8 @@
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  name: 'BonecosPage',
-};
+<script lang="ts" setup>
+defineOptions({
+  name: 'BonecosPage'
+})
 </script>

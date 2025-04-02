@@ -1,19 +1,39 @@
 import type { RouteRecordRaw } from "vue-router";
 
 export const routes: RouteRecordRaw[] = [
-    {
-        path: "/",
-        component: () => import("../layouts/BlankLayout.vue"),
-        children: [
-            { path: "", component: () => import("../pages/IndexPage.vue") },
-            { path: "categorias", component: () => import("../pages/CategoriaPage.vue") },
-            { path: "categorias/bonecos", component: () => import("../pages/BonecosPage.vue") },
-            { path: "categorias/quebra-cabeca", component: () => import("../pages/QuebraCabecaPage.vue") },
-            { path: "categorias/fantasias", component: () => import("../pages/FantasiasPage.vue") },
-            { path: "categorias/pelucias", component: () => import("../pages/PeluciasPage.vue") },
-            { path: "equipe", component: () => import("../pages/EquipePage.vue") }
-        ]
-    }
-];
-
+  {
+    path: "/",
+    component: () => import("../layouts/BlankLayout.vue"),
+    children: [
+      {
+        name: "home",
+        path: "",
+        component: () => import("../pages/IndexPage.vue"),
+      },
+    ],
+  },
+  {
+    path: "/explore",
+    component: () => import("../layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "catalogo",
+        component: () => import("../pages/CategoryPage.vue"),
+      },
+      {
+        path: "categorias/:categoryId",
+        component: () => import("../pages/ToysPage.vue"),
+      },
+    ],
+  },
+  {
+    path: "/admin",
+    component: () => import("../layouts/AdminLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("../pages/adminPages/AdminCategoryPage.vue"),
+      },
+    ],
+  },
 ];
