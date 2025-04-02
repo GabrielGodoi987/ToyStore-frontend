@@ -1,10 +1,12 @@
-<script setup lang="ts">
-</script>
-
 <template>
-  <RouterView />
+  <div id="app">
+    <router-view />
+  </div>
 </template>
 
-<style scoped>
+<script lang="ts" setup>
+</script>
 
+<style scoped>
+/* Estilos globais */
 </style>
