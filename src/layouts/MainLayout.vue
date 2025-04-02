@@ -4,11 +4,14 @@
         <div class="w-60 bg-[#162456] text-white min-h-screen flex flex-col p-4">
             <!-- Logo -->
             <img src="../assets/logo.png" alt="ToyStore Logo" class="mb-8 h-30 w-auto mx-auto p-2" />
-            <ul class="flex flex-col space-y-4 text-left">
-                <li class="flex items-center space-x-4" v-for="(i, index) in PublicmenuConfig" :key="index">
-                    <i class="fas fa-home text-white ml-4"></i> <!-- Ícone Home do FontAwesome -->
+            <ul class="flex flex-col space-y-5 text-left">
+
+                <li class="flex items-center space-x-6 p-3 transition-colors rounded text-left hover:bg-green-800 text-xl " v-for="(i, index) in PublicmenuConfig" :key="index">
+                        <img :src="i.icon" alt="" class="w-6 h-6" /> 
+                        {{ i.icon.alt }}
                     <router-link :to="i.link" style="color: white;"
-                        class="hover:bg-gray-700 p-2 rounded block text-xl">{{i.label}}</router-link>
+                        >{{i.label}}
+                    </router-link>
                 </li>
             </ul>
         </div>

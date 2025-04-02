@@ -10,7 +10,7 @@ export const PublicmenuConfig: IMenu[] = [
   {
     label: "Catalogo",
     description: "Explorar brinquedos",
-    icon: "explore",
+    icon: "catalog",
     link: "/explore/catalogo",
   },
   {

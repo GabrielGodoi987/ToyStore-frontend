@@ -1,14 +1,22 @@
 <template>
-  <div @click="handleClick"
-    class="bg-white p-4 rounded-lg shadow-md text-center cursor-pointer hover:bg-gray-100 transition w-[280px] h-[340px] flex flex-col items-center justify-between">
-    <!-- Imagem do boneco -->
-    <img :src="image || 'https://cdn.quasar.dev/img/mountains.jpg'" alt=" Imagem da categoria"
-      class="w-full h-[200px] object-cover rounded-md mb-4" />
-    <!-- Nome da categoria -->
-    <h3 class="text-xl font-semibold">{{ name }}</h3>
-    <!-- Descrição da categoria 
-    <p class="text-gray-600">Brinquedos colecionáveis e muito mais.</p>
-    -->
+  <div 
+    @click="handleClick"
+    class="bg-white p-2 sm:p-3 rounded-lg shadow-md cursor-pointer hover:bg-gray-50 transition 
+           w-[140px] xs:w-[160px] sm:w-[180px] md:w-[200px] 
+           h-[200px] sm:h-[220px] md:h-[240px]
+           flex flex-col items-center mx-auto"
+  >
+    <div class="w-[100px] xs:w-[110px] sm:w-[120px] h-[100px] xs:h-[110px] sm:h-[120px] mb-2 sm:mb-3">
+      <img 
+        :src="image || 'https://cdn.quasar.dev/img/mountains.jpg'" 
+        alt="Imagem da categoria"
+        class="w-full h-full object-cover rounded-full sm:rounded-lg"
+      />
+    </div>
+
+    <h3 class="text-sm xs:text-base sm:text-lg font-semibold text-gray-800 text-center line-clamp-2 px-1">
+      {{ name }}
+    </h3>
   </div>
 </template>
 
