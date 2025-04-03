@@ -8,27 +8,14 @@
         alt="ToyStore Logo"
         class="mb-8 h-30 w-auto mx-auto p-2"
       />
-      <ul class="flex flex-col space-y-4 text-left">
+      <ul class="flex flex-col space-y-5 text-left">
 
-        <li class="flex items-center space-x-8">
-          <img src="../assets/images/House.svg" style="color:white"/> 
-          <router-link to="/" style="color: white;" class="hover:bg-gray-700 p-2 rounded block text-xl">Home</router-link>
-        </li>
-
-        <li class="flex items-center space-x-4"> 
-          <img src="../assets/images/Catalogo.svg" style="color:white"/>
-          <router-link to="/categorias" style="color: white;" class="hover:bg-gray-700 p-2 rounded block text-xl">Catálogo</router-link>
-        </li>
-
-        <li class="flex items-center space-x-4">
-          <img src="../assets/images/Admin.svg" style="color:white"/>
-          <router-link to="/administracao" style="color: white;" class="hover:bg-gray-700 p-2 rounded block text-xl">Administração</router-link>
-        </li>
-
-        <li class="flex items-center space-x-4">
-          <img src="../assets/images/Group.svg" style="color:white"/>
-          <router-link to="/equipe" style="color: white;" class="hover:bg-gray-700 p-2 rounded block text-xl">Equipe</router-link>
-        </li>
+          <li class="flex items-center space-x-6 p-3 transition-colors rounded text-left hover:bg-green-800 text-xl " v-for="(i, index) in PublicmenuConfig" :key="index">
+              <img :src="i.icon" alt="" class="w-8 h-8"/>
+              <router-link :to="i.link" style="color: white;"
+                  >{{i.label}}
+              </router-link>
+          </li>
       </ul>
     </div>
 
@@ -41,7 +28,9 @@
   </div>
 </template>
 
-
+<script>
+import { PublicmenuConfig } from '../config/publicMenuConfig.js';
+</script>
 
 
 

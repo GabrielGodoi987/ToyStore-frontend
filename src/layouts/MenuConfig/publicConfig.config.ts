@@ -4,19 +4,19 @@ export const PublicmenuConfig: IMenu[] = [
   {
     label: "Home",
     description: "Página inicial",
-    icon: "home",
+    icon: "@/assets/images/Home.svg",
     link: "/",
   },
   {
     label: "Catalogo",
     description: "Explorar brinquedos",
-    icon: "catalog",
+    icon: "@/assets/images/Catalogo.svg",
     link: "/explore/catalogo",
   },
   {
     label: "Equipe",
     description: "Conheça nossa equipe",
-    icon: "people",
+    icon: "@/assets/images/Group.svg",
     link: "/",
   },
 ];
