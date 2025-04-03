@@ -40,15 +40,15 @@ export const routes: RouteRecordRaw[] = [
       },
       {
         path: "categorymanagement",
-        component: () => import("../pages/adminPages/AdminCategoryPage.vue"),
+        component: () => import("../pages/adminPages/category/AdminCategoryPage.vue"),
       },
       {
         path: "toysmanagement",
-        component: () => import("../pages/adminPages/AdminToyPage.vue"),
+        component: () => import("../pages/adminPages/toy/AdminToyPage.vue"),
       },
       {
         path: "adminusermanagement",
-        component: () => import("../pages/adminPages/AdminUserPage.vue"),
+        component: () => import("../pages/adminPages/user/AdminUserPage.vue"),
       },
     ],
   },

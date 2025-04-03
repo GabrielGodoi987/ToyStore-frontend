@@ -40,7 +40,7 @@ export class CategoryService {
         `${this.route}/${categoryId}`,
         updatedData
       );
-      return response.data;
+      return response;
     } catch (error) {
       console.error("Error updating category:", error);
       throw error;
@@ -50,7 +50,7 @@ export class CategoryService {
   async deleteCategory(categoryId: number) {
     try {
       const response = await this.api.delete(`${this.route}/${categoryId}`);
-      return response.data;
+      return response;
     } catch (error) {
       console.error("Error deleting category:", error);
       throw error;
@@ -65,7 +65,7 @@ export class CategoryService {
         },
       });
 
-      response.data;
+      return response;
     } catch (error) {
       console.error("Error deleting categories:", error);
       throw error;

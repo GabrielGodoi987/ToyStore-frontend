@@ -3,14 +3,14 @@
     <h2 class="text-4xl font-bold mt-3 mb-6 text-center">Catálogo de Brinquedos</h2>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-14">
-      <CategoriaCard v-for="(i, index) in categories" :key="index" :name="i.name" @navigate="navigateToCategory"/>
+      <CategoriaCardComponent v-for="(i, index) in categories" :key="index" :name="i.name" @navigate="navigateToCategory"/>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { onMounted } from 'vue';
-import CategoriaCard from '../components/CategoriaCard.vue';
+import CategoriaCardComponent from '../../components/CategoriaCardComponent.vue';
 import { CategoryService } from '../../services/CategoryService';
 import type { ICategory } from '../../interfaces/ICategory';
 import { ref } from 'vue';
