@@ -35,26 +35,19 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue';
 import type { ICategory } from '../../../interfaces/ICategory';
-
 const categories = defineModel({type: Array<ICategory>, required: true});
-const selected = ref<ICategory[]>([]);
-const id = ref<number[]>([]);
 
-const openEditDialog = () => {
-    // abre o dialog com todas as informações da categoria
-}
-
-const confirmDialog = () => {
-    // abre o dialog para confirmar a deleção ou não de uma categoria
-}
+const emit = defineEmits<{
+    (e: 'delete', id: number): void;
+    (e: 'edit', id: number): void;
+}>();
 
 const handleDelete = (id: any) => {
-   alert(id)
+   emit('delete', id)
 }
 
 const handleEdit = (id: any) => {
-    alert(id)
+    emit('edit', id)
 }
 </script>
