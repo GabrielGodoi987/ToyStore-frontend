@@ -21,36 +21,28 @@
                 <form class="px-6 w-full" @submit.prevent="confirmCreate">
                     <div class="mb-5">
                         <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nome do Brinquedo</label>
-                        <input type="text" id="name" v-model="name"
+                        <input type="text" id="name" v-model="newToy.title"
                             class="px-4 py-3 mt-1 block w-full border-gray-300 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-200"
                             placeholder="Digite o nome do brinquedo">
                     </div>
                     <div class="grid grid-cols-2 gap-4 mb-5">
                         <div>
                             <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Categoria</label>
-                            <select id="category" v-model="category"
+                            <select id="category" v-model="newToy.category"
                                 class="px-4 py-3 mt-1 w-full rounded-lg border-gray-300 border focus:ring-blue-500 focus:border-blue-500 transition duration-200">
-                                <option value=""></option>
-                                <option value="">Carrinhos</option>
-                                <option value="">Bonecas</option>
-                                <option value="">Quebra-cabeças</option>
-                                <option value="">Brinquedos de Construção</option>
-                                <option value="">Brinquedos de Pelúcia</option>
-                                <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
+                                <option value="Brinquedos Eletrônicos">Brinquedos Eletrônicos</option>
+                                <option value="Bonecas">Bonecas</option>
+                                <option value="Blocos de Montar">Blocos de Montar</option>
+                                <option value="Jogos Educativos">Jogos Educativos</option>
+                                <option value="Pelúcias">Pelúcias</option>
                             </select>
                         </div>
                         <div>
                             <label for="price" class="block text-sm font-medium text-gray-700 mb-1">Preço</label>
-                            <input type="text" id="price" v-model="price"
+                            <input type="number" step="0.01" id="price" v-model="newToy.price"
                                 class="px-4 py-3 mt-1 w-full rounded-lg border-gray-300 border focus:ring-blue-500 focus:border-blue-500 transition duration-200"
                                 placeholder="R$ 0,00" />
                         </div>
-                    </div>
-                    <div class="mb-5">
-                        <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Descrição</label>
-                        <textarea id="description" v-model="description" rows="3"
-                            class="px-4 py-3 mt-1 w-full rounded-lg border-gray-300 border focus:ring-blue-500 focus:border-blue-500 transition duration-200"
-                            placeholder="Descreva o brinquedo"></textarea>
                     </div>
                     <div class="mt-8 flex justify-center gap-4">
                         <button type="button" @click="createDialog = false"
@@ -71,34 +63,27 @@
             <template #content>
                 <form class="px-6 w-full" @submit.prevent="confirmEdit">
                     <div class="mb-5">
-                        <label for="id" class="block text-sm font-medium text-gray-700 mb-1">ID do Brinquedo</label>
-                        <input type="text" id="id" v-model="toyId"
-                            class="px-4 py-3 mt-1 block w-full border-gray-300 border rounded-lg shadow-sm bg-gray-100 cursor-not-allowed"
-                            disabled readonly>
-                    </div>
-                    <div class="mb-5">
                         <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nome do Brinquedo</label>
-                        <input type="text" id="name" v-model="name"
+                        <input type="text" id="name" v-model="currentToy.title"
                             class="px-4 py-3 mt-1 block w-full border-gray-300 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-200">
                     </div>
                     <div class="grid grid-cols-2 gap-4 mb-5">
                         <div>
                             <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Categoria</label>
-                            <select id="category" v-model="category"
+                            <select id="category" v-model="currentToy.category"
                                 class="px-4 py-3 mt-1 w-full rounded-lg border-gray-300 border focus:ring-blue-500 focus:border-blue-500 transition duration-200">
-                                <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
+                                <option value="Brinquedos Eletrônicos">Brinquedos Eletrônicos</option>
+                                <option value="Bonecas">Bonecas</option>
+                                <option value="Blocos de Montar">Blocos de Montar</option>
+                                <option value="Jogos Educativos">Jogos Educativos</option>
+                                <option value="Pelúcias">Pelúcias</option>
                             </select>
                         </div>
                         <div>
                             <label for="price" class="block text-sm font-medium text-gray-700 mb-1">Preço</label>
-                            <input type="text" id="price" v-model="price"
+                            <input type="number" step="0.01" id="price" v-model="currentToy.price"
                                 class="px-4 py-3 mt-1 w-full rounded-lg border-gray-300 border focus:ring-blue-500 focus:border-blue-500 transition duration-200" />
                         </div>
-                    </div>
-                    <div class="mb-5">
-                        <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Descrição</label>
-                        <textarea id="description" v-model="description" rows="3"
-                            class="px-4 py-3 mt-1 w-full rounded-lg border-gray-300 border focus:ring-blue-500 focus:border-blue-500 transition duration-200"></textarea>
                     </div>
                     <div class="mt-8 flex justify-center gap-4">
                         <button type="button" @click="editDialog = false"
@@ -124,9 +109,9 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-medium text-gray-900 mb-2">Tem certeza que deseja excluir este brinquedo?</h3>
-                    <p class="text-gray-500">A exclusão de <span class="font-bold text-gray-700">{{ name }}</span> é irreversível.</p>
+                    <p class="text-gray-500">A exclusão de <span class="font-bold text-gray-700">{{ currentToy.title }}</span> é irreversível.</p>
                 </div>
-                <div v-if="toyId" class="flex justify-center gap-4 p-6 pt-0">
+                <div class="flex justify-center gap-4 p-6 pt-0">
                     <button @click="deleteDialog = false"
                         class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-200">
                         Cancelar
@@ -149,7 +134,36 @@
 <script setup>
 import { ref } from "vue";
 import DialogComponent from "../../../components/DialogComponent.vue";
-import ToysTable from "./ToysTable.vue"; 
+import ToysTable from "./ToysTable.vue";
+import SuccessAlertComponent from "../../../components/alerts/SuccessAlertComponent.vue";
+
+const toys = ref([
+  {
+    title: 'Carrinho de Controle Remoto',
+    category: 'Brinquedos Eletrônicos',
+    price: 129.90
+  },
+  {
+    title: 'Boneca Interativa',
+    category: 'Bonecas',
+    price: 89.99
+  },
+  {
+    title: 'Lego Arquitetura',
+    category: 'Blocos de Montar',
+    price: 199.50
+  },
+  {
+    title: 'Quebra-Cabeça 1000 peças',
+    category: 'Jogos Educativos',
+    price: 59.90
+  },
+  {
+    title: 'Pelúcia Urso Gigante',
+    category: 'Pelúcias',
+    price: 119.00
+  }
+]);
 
 const createDialog = ref(false);
 const editDialog = ref(false);
@@ -158,47 +172,51 @@ const isCreateAlert = ref(false);
 const isEditAlert = ref(false);
 const isDeleteAlert = ref(false);
 
-const toyId = ref('');
-const name = ref('');
-const category = ref('');
-const price = ref('');
+const newToy = ref({
+  title: '',
+  category: 'Brinquedos Eletrônicos',
+  price: 0
+});
+
+const currentToy = ref({
+  title: '',
+  category: '',
+  price: 0
+});
 
 const handleCreate = () => {
-    name.value = '';
-    category.value = '';
-    price.value = '';
-    createDialog.value = true;
+  newToy.value = { title: '', category: 'Brinquedos Eletrônicos', price: 0 };
+  createDialog.value = true;
 };
 
-const handleEdit = (item) => {
-    toyId.value = item.id;
-    name.value = item.title;
-    category.value = item.category;
-    price.value = item.price;
-    editDialog.value = true;
+const handleEdit = (toy) => {
+  currentToy.value = { ...toy };
+  editDialog.value = true;
 };
 
-const handleDelete = (item) => {
-    toyId.value = item.id;
-    name.value = item.title;
-    deleteDialog.value = true;
+const handleDelete = (toy) => {
+  currentToy.value = { ...toy };
+  deleteDialog.value = true;
 };
 
 const confirmCreate = () => {
-    // Lógica para criar brinquedo
-    createDialog.value = false;
-    isCreateAlert.value = true;
+  toys.value.push({ ...newToy.value });
+  createDialog.value = false;
+  isCreateAlert.value = true;
 };
 
 const confirmEdit = () => {
-    // Lógica para editar brinquedo
-    editDialog.value = false;
-    isEditAlert.value = true;
+  const index = toys.value.findIndex(t => t.title === currentToy.value.title);
+  if (index !== -1) {
+    toys.value[index] = { ...currentToy.value };
+  }
+  editDialog.value = false;
+  isEditAlert.value = true;
 };
 
 const confirmDelete = () => {
-    // Lógica para deletar brinquedo
-    deleteDialog.value = false;
-    isDeleteAlert.value = true;
+  toys.value = toys.value.filter(t => t.title !== currentToy.value.title);
+  deleteDialog.value = false;
+  isDeleteAlert.value = true;
 };
 </script>

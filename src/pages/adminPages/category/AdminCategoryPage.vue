@@ -12,8 +12,11 @@
         </div>
         
         <section class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-            <!-- Espaço da tabela -->
-            <CategoryTable v-model="categories" @edit="handleEdit" @delete="handleDelete" />
+            <CategoryTable 
+                :modelValue="categories" 
+                @edit="handleEdit" 
+                @delete="handleDelete" 
+            />
         </section>
 
         <!-- Modal de Criação -->
@@ -22,13 +25,13 @@
                 <form class="px-6 w-full" @submit.prevent="confirmCreate">
                     <div class="mb-5">
                         <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nome da categoria</label>
-                        <input type="text" id="name" v-model="name"
+                        <input type="text" id="name" v-model="newCategory.name" required
                             class="px-4 py-3 mt-1 block w-full border-gray-300 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-200"
                             placeholder="Digite o nome da categoria">
                     </div>
                     <div class="mb-5">
                         <label for="shortDescription" class="block text-sm font-medium text-gray-700 mb-1">Descrição curta</label>
-                        <input type="text" id="shortDescription" v-model="shortDescription"
+                        <input type="text" id="shortDescription" v-model="newCategory.shortDescription"
                             class="px-4 py-3 mt-1 w-full rounded-lg border-gray-300 border focus:ring-blue-500 focus:border-blue-500 transition duration-200"
                             placeholder="Digite uma breve descrição" />
                     </div>
@@ -52,18 +55,18 @@
                 <form class="px-6 w-full" @submit.prevent="confirmEdit">
                     <div class="mb-5">
                         <label for="id" class="block text-sm font-medium text-gray-700 mb-1">ID da categoria</label>
-                        <input type="text" id="id" v-model="catId"
+                        <input type="text" id="id" :value="currentCategory.id"
                             class="px-4 py-3 mt-1 block w-full border-gray-300 border rounded-lg shadow-sm bg-gray-100 cursor-not-allowed"
                             disabled readonly>
                     </div>
                     <div class="mb-5">
                         <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nome da categoria</label>
-                        <input type="text" id="name" v-model="name"
+                        <input type="text" id="name" v-model="currentCategory.name" required
                             class="px-4 py-3 mt-1 block w-full border-gray-300 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-200">
                     </div>
                     <div class="mb-5">
                         <label for="shortDescription" class="block text-sm font-medium text-gray-700 mb-1">Descrição curta</label>
-                        <input type="text" id="shortDescription" v-model="shortDescription"
+                        <input type="text" id="shortDescription" v-model="currentCategory.shortDescription"
                             class="px-4 py-3 mt-1 w-full rounded-lg border-gray-300 border focus:ring-blue-500 focus:border-blue-500 transition duration-200" />
                     </div>
                     <div class="mt-8 flex justify-center gap-4">
@@ -90,9 +93,9 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-medium text-gray-900 mb-2">Tem certeza que deseja excluir esta categoria?</h3>
-                    <p class="text-gray-500">A exclusão de <span class="font-bold text-gray-700">{{ name }}</span> é irreversível.</p>
+                    <p class="text-gray-500">A exclusão de <span class="font-bold text-gray-700">{{ currentCategory.name }}</span> é irreversível.</p>
                 </div>
-                <div v-if="catId" class="flex justify-center gap-4 p-6 pt-0">
+                <div class="flex justify-center gap-4 p-6 pt-0">
                     <button @click="deleteDialog = false"
                         class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-200">
                         Cancelar
@@ -113,7 +116,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { ref, onMounted } from "vue";
 import { CategoryService } from "../../../services/CategoryService";
 import type { ICategory } from "../../../interfaces/ICategory";
 import DialogComponent from "../../../components/DialogComponent.vue";
@@ -123,105 +126,104 @@ import SuccessAlertComponent from "../../../components/alerts/SuccessAlertCompon
 const categoryService = new CategoryService("/categories");
 const categories = ref<ICategory[]>([]);
 
-const createDialog = ref<boolean>(false);
-const isCreateAlert = ref<boolean>(false);
+// Estados dos modais
+const createDialog = ref(false);
+const editDialog = ref(false);
+const deleteDialog = ref(false);
 
-const deleteDialog = ref<boolean>(false);
-const isDeleteAlert = ref<boolean>(false);
+// Estados dos alertas
+const isCreateAlert = ref(false);
+const isEditAlert = ref(false);
+const isDeleteAlert = ref(false);
 
-const editDialog = ref<boolean>(false);
-const isEditAlert = ref<boolean>(false);
+// Dados dos formulários
+const newCategory = ref<Omit<ICategory, 'id'>>({ 
+  name: '', 
+  shortDescription: '' 
+});
 
-const catId = ref<number>(0);
-const name = ref<string>("");
-const shortDescription = ref<string>("");
+const currentCategory = ref<ICategory>({ 
+  id: 0, 
+  name: '', 
+  shortDescription: '' 
+});
 
-
+// Handlers
 const handleCreate = () => {
-    name.value = "";
-    shortDescription.value = ""
-    createDialog.value = !createDialog.value;
-}
+  newCategory.value = { name: '', shortDescription: '' };
+  createDialog.value = true;
+};
 
 const handleEdit = (id: number) => {
-    catId.value = id;
-    const category = categories.value.find((category) => category.id === id);
-    if (category) {
-        name.value = category.name;
-        shortDescription.value = category.shortDescription;
-    }
-    editDialog.value = !editDialog.value;
-}
+  const category = categories.value.find(c => c.id === id);
+  if (category) {
+    currentCategory.value = { ...category };
+    editDialog.value = true;
+  }
+};
 
 const handleDelete = (id: number) => {
-    catId.value = id;
-    const category = categories.value.find((category) => category.id === id);
-    if (category) {
-        name.value = category.name;
-    }
-    deleteDialog.value = !deleteDialog.value;
-}
+  const category = categories.value.find(c => c.id === id);
+  if (category) {
+    currentCategory.value = { ...category };
+    deleteDialog.value = true;
+  }
+};
 
-
+// Operações CRUD
 const confirmCreate = async () => {
-    try {
-        const response = await categoryService.addCategory({
-            name: name.value,
-            shortDescription: shortDescription.value,
-            toys: null
-        });
-        if (response.status == 201) {
-            categories.value.push(response.data);
-            createDialog.value = false;
-            isCreateAlert.value = true;
-        }
-        console.log(response);
-    } catch (error) {
-        console.error("Erro ao criar categoria:", error);
+  try {
+    const response = await categoryService.addCategory(newCategory.value);
+    if (response.status === 201) {
+      categories.value.push(response.data);
+      createDialog.value = false;
+      isCreateAlert.value = true;
     }
-}
-const confirmDelete = async () => {
-    try {
-        const response = await categoryService.deleteCategory(catId.value);
-        if (response.status == 204) {
-            const index = categories.value.findIndex((category) => category.id !== catId.value);
-            categories.value.splice(index, 1);
-            deleteDialog.value = false;
-            isDeleteAlert.value = true;
-        }
-    } catch (error) {
-        console.error("Erro ao deletar categoria:", error);
-    }
-}
+  } catch (error) {
+    console.error("Erro ao criar categoria:", error);
+  }
+};
+
 const confirmEdit = async () => {
-    try {
-        const response = await categoryService.updateCategory(catId.value, {
-            name: name.value,
-            shortDescription: shortDescription.value,
-            toys: null
-        });
-        if (response.status == 200) {
-            const index = categories.value.findIndex((category) => category.id === catId.value);
-            if (index !== -1) {
-                categories.value[index] = response.data;
-            }
-            editDialog.value = false;
-            isEditAlert.value = true;
-        }
-
-        return response;
-    } catch (error) {
-
+  try {
+    const response = await categoryService.updateCategory(
+      currentCategory.value.id, 
+      currentCategory.value
+    );
+    
+    if (response.status === 200) {
+      const index = categories.value.findIndex(c => c.id === currentCategory.value.id);
+      if (index !== -1) {
+        categories.value[index] = response.data;
+      }
+      editDialog.value = false;
+      isEditAlert.value = true;
     }
-}
+  } catch (error) {
+    console.error("Erro ao atualizar categoria:", error);
+  }
+};
 
+const confirmDelete = async () => {
+  try {
+    const response = await categoryService.deleteCategory(currentCategory.value.id);
+    if (response.status === 204) {
+      categories.value = categories.value.filter(c => c.id !== currentCategory.value.id);
+      deleteDialog.value = false;
+      isDeleteAlert.value = true;
+    }
+  } catch (error) {
+    console.error("Erro ao deletar categoria:", error);
+  }
+};
 
+// Carrega as categorias ao montar o componente
 onMounted(async () => {
-    try {
-        const response = await categoryService.getCategories();
-        categories.value = response;
-    } catch (error) {
-        console.error("Erro ao buscar categorias:", error);
-    }
-})
+  try {
+    const response = await categoryService.getCategories();
+    categories.value = response;
+  } catch (error) {
+    console.error("Erro ao buscar categorias:", error);
+  }
+});
 </script>
