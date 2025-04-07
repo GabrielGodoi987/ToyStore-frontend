@@ -1,9 +1,10 @@
+import type { IImageFile } from "./IImageFile";
+
 export interface IToy {
-    id: number | null;
+    id?: number | null;
     name: string;
     description: string;
     price: number;
     categoryId: number;
-    // teste
-    images: File[] | [];
+    images: IImageFile[];
 }

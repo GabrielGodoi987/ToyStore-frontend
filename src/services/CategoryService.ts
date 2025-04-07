@@ -14,7 +14,7 @@ export class CategoryService {
   async getCategories() {
     try {
       const response = await this.api.get(this.route);
-      return response.data;
+      return response;
     } catch (error) {
       console.error("Error fetching categories:", error);
       throw error;

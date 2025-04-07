@@ -200,7 +200,7 @@ const confirmEdit = async () => {
 onMounted(async () => {
     try {
         const response = await categoryService.getCategories();
-        categories.value = response;
+        categories.value = response.data;
     } catch (error) {
         console.error("Erro ao buscar categorias:", error);
     }
