@@ -1,40 +1,60 @@
+<!-- components/CategoriaCard.vue -->
 <template>
-  <div 
-    @click="handleClick"
-    class="bg-white p-2 sm:p-3 rounded-lg shadow-md cursor-pointer hover:bg-gray-50 transition 
-           w-[140px] xs:w-[160px] sm:w-[180px] md:w-[200px] 
-           h-[200px] sm:h-[220px] md:h-[240px]
-           flex flex-col items-center mx-auto"
-  >
-    <div class="w-[100px] xs:w-[110px] sm:w-[120px] h-[100px] xs:h-[110px] sm:h-[120px] mb-2 sm:mb-3">
-      <img 
-        :src="image || 'https://cdn.quasar.dev/img/mountains.jpg'" 
-        alt="Imagem da categoria"
-        class="w-full h-full object-cover rounded-full sm:rounded-lg"
-      />
-    </div>
-
-    <h3 class="text-sm xs:text-base sm:text-lg font-semibold text-gray-800 text-center line-clamp-2 px-1">
-      {{ name }}
-    </h3>
+  <div class="categoria-card" @click="navigateToCategory">
+    <img :src="image || '../assets/images/pelucias.PNG'" alt="CategoriaImage" class="w-full h-32 object-cover rounded-lg mb-4" />
+    <h3>{{ name }}</h3>
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
+import { useRouter } from 'vue-router';
+
 const props = defineProps({
-  id: Number,
+  id: {
+    type: [Number, String],
+    required: true
+  },
   name: {
     type: String,
     required: true
   },
-  image: String
+  description: {
+    type: String,
+    default: ''
+  },
+  image: {
+    type: String,
+    default: ''
+  }
 });
 
-const emit = defineEmits<{
-  (e: 'navigate', id: any): void;
-}>();
+const router = useRouter();
 
-const handleClick = () => {
-  emit('navigate', props.id);
+const navigateToCategory = () => {
+  console.log('Navegando para categoria ID:', props.id);
+  
+  router.push({
+    path: `/explore/categorias/${props.id}`,
+    query: { 
+      categoryName: props.name 
+    }
+  }).catch(err => {
+    console.error('Erro na navegação:', err);
+  });
 };
 </script>
+
+<style scoped>
+.categoria-card {
+  cursor: pointer;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.categoria-card:hover {
+  background-color: #f5f5f5;
+  transform: translateY(-2px);
+}
+</style>
