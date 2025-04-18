@@ -12,7 +12,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(item, index) in users" :key="index" class="border-b hover:bg-gray-100">
+                <tr v-for="(item, index) in users" :key="index" class="hover:bg-gray-100">
                     <td class="p-3">
                         <input type="checkbox" class="accent-blue-600">
                     </td>
@@ -20,10 +20,10 @@
                     <td class="p-3">{{ item.name }}</td>
                     <td class="p-3">{{ item.email }}</td>
                     <td class="p-3 flex justify-center space-x-3">
-                        <button class="bg-text-gray-500 hover:text-blue-600">
+                        <button class="bg-text-gray-500 hover:text-blue-600 shadow p-3" @click="handleEdit(item.id)">
                             ✏️
                         </button>
-                        <button class="text-gray-500 hover:text-red-600">
+                        <button class="text-gray-500 hover:text-red-600 shadow p-3" @click="handleDelete(item.id)">
                             🗑️
                         </button>
                     </td>
@@ -39,4 +39,18 @@
 import type { IUser } from '../../../interfaces/IUser';
 
 const users = defineModel({ type: Array<IUser>, required: true })
+
+
+const emit = defineEmits<{
+    (e: 'delete', id: number): void;
+    (e: 'edit', id: number): void;
+}>();
+
+const handleDelete = (id: any) => {
+    emit('delete', id)
+}
+
+const handleEdit = (id: any) => {
+    emit('edit', id)
+}
 </script>

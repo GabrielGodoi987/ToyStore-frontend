@@ -1,6 +1,5 @@
 import type { AxiosInstance } from "axios";
 import { axiosApi } from "../boot/Axios";
-import type { IUser } from "../interfaces/IUser";
 
 export class UserService {
   private api: AxiosInstance;
@@ -43,7 +42,7 @@ export class UserService {
     }
   }
 
-  async update(id: number, data: IUser) {
+  async update(id: number, data: FormData) {
     return await this.api.put(`${this.route}/${id}`, data, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -55,7 +54,7 @@ export class UserService {
   async delete(id: number) {
     try {
       const response = await this.api.delete(`${this.route}/${id}`);
-      return response.data;
+      return response;
     } catch (error) {
       console.error("Error deleting category:", error);
       throw error;
