@@ -1,11 +1,18 @@
 <!-- pages/public/ToysPage.vue -->
 <template>
   <div class="toys-page">
-    <button @click="goBack" class="back-button" aria-label="Voltar para a página anterior">
-      ← Voltar
+    <!-- Botão de voltar condicional -->
+    <button 
+      v-if="toys.length > 0"
+      @click="goBack"
+      class="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-200 shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-70 mb-6"
+      aria-label="Voltar para a página anterior"
+    >
+      <span class="text-xl transition-transform duration-200 group-hover:-translate-x-1">←</span>
+      <span class="font-medium">Voltar</span>
     </button>
 
-    <h1 class="category-title">
+    <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center text-gray-800">
       Brinquedos da Categoria: <span class="category-name">{{ categoryName }}</span>
     </h1>
 
@@ -18,8 +25,14 @@
     </div>
 
     <div v-else>
-      <div v-if="toys.length === 0" class="no-toys">
-        Nenhum brinquedo encontrado nesta categoria.
+      <div v-if="toys.length === 0" class="flex flex-col items-center justify-center p-8 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200 text-center">
+        <span class="text-4xl mb-3">😕</span>
+        <h3 class="text-xl font-bold text-gray-700 mb-2">Nenhum brinquedo encontrado</h3>
+        <p class="text-gray-500 max-w-md">Parece que esta categoria está vazia no momento. Que tal explorar outras categorias?</p>
+        <button class="mt-4 px-5 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors flex items-center gap-2 cursor-pointer" @click="goBack">
+          Explorar categorias
+          <span>🔍</span>
+        </button>
       </div>
 
       <div v-else class="toys-grid">
@@ -32,7 +45,6 @@
     </div>
   </div>
 </template>
-
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
@@ -85,15 +97,6 @@ onMounted(() => {
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
-}
-
-.back-button {
-  background: none;
-  border: none;
-  color: #42b983;
-  cursor: pointer;
-  margin-bottom: 20px;
-  font-size: 1rem;
 }
 
 .toys-grid {

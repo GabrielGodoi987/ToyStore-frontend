@@ -1,8 +1,22 @@
 <!-- components/CategoriaCard.vue -->
 <template>
-  <div class="categoria-card" @click="navigateToCategory">
-    <img :src="image || '../assets/images/pelucias.PNG'" alt="CategoriaImage" class="w-full h-32 object-cover rounded-lg mb-4" />
-    <h3>{{ name }}</h3>
+  <div 
+    class="cursor-pointer p-4 border border-gray-200 rounded-lg transition-all duration-300 hover:bg-gray-50 hover:-translate-y-1 hover:shadow-md"
+    @click="navigateToCategory"
+  >
+    <div class="relative h-40 w-full overflow-hidden rounded-lg mb-3 bg-gray-100">
+      <img 
+        :src="image || '../assets/images/pelucias.PNG'" 
+        :alt="'Imagem da categoria ' + name"
+        class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+      />
+      <div class="absolute inset-0 bg-black opacity-0 hover:opacity-10 transition-opacity duration-300"></div>
+    </div>
+    
+    <div class="text-center">
+      <h3 class="text-lg font-semibold text-gray-800 mb-1">{{ name }}</h3>
+      <p v-if="description" class="text-sm text-gray-500 line-clamp-2">{{ description }}</p>
+    </div>
   </div>
 </template>
 
@@ -43,18 +57,3 @@ const navigateToCategory = () => {
   });
 };
 </script>
-
-<style scoped>
-.categoria-card {
-  cursor: pointer;
-  padding: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  transition: all 0.3s ease;
-}
-
-.categoria-card:hover {
-  background-color: #f5f5f5;
-  transform: translateY(-2px);
-}
-</style>
