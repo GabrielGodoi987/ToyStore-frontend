@@ -23,7 +23,7 @@
         <h2 class="text-3xl font-bold mb-4">PIXAR</h2> <!-- Afastado da frase -->
         <p class="mb-6">Ao infinito e além! Explore os brinquedos da Pixar, roupas, itens colecionáveis e mais</p>
         <!-- Afastado do botão -->
-        <button class="mt-4 text-black py-2 px-4 rounded" style="background-color: #F0B100;">
+        <button class="mt-4 text-black py-2 px-4 rounded" style="background-color:#F0B100;">
           Explorar mais
         </button>
 

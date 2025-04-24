@@ -1,157 +1,223 @@
 <template>
-  <h1 class="text-2xl font-bold mb-4">Gerenciamento de Brinquedos</h1>
-  <div class="p-6 bg-white rounded-lg shadow-md">
-    <ToyTable v-model="toys" />
-  </div>
+    <main class="max-w-6xl mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-8 border-b pb-4">
+            <h1 class="text-3xl font-bold text-gray-800">Gerenciamento de Brinquedos</h1>
+            <button @click="handleCreate" type="button"
+                class="flex items-center gap-2 px-6 py-3 rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 shadow-md hover:shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                </svg>
+                Adicionar Brinquedo
+            </button>
+        </div>
+        
+        <section class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <ToysTable v-model="toys" @edit="handleEdit" @delete="handleDelete" />
+        </section>
 
-  <!-- botão para criação de Brinquedo -->
-  <section>
-    <button type="button" @click="showDialog = true"
-      class="mt-10 p-4 w-[250px] rounded-3xl text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-blue-800">
-      Adicionar Brinquedo
-    </button>
-  </section>
+        <!-- Modal de Criação -->
+        <DialogComponent v-model="createDialog" title="Adicionar Brinquedo">
+            <template #content>
+                <form class="px-6 w-full" @submit.prevent="confirmCreate">
+                    <div class="mb-5">
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nome do Brinquedo</label>
+                        <input type="text" id="name" v-model="newToy.title"
+                            class="px-4 py-3 mt-1 block w-full border-gray-300 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+                            placeholder="Digite o nome do brinquedo">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mb-5">
+                        <div>
+                            <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Categoria</label>
+                            <select id="category" v-model="newToy.category"
+                                class="px-4 py-3 mt-1 w-full rounded-lg border-gray-300 border focus:ring-blue-500 focus:border-blue-500 transition duration-200">
+                                <option value="Brinquedos Eletrônicos">Brinquedos Eletrônicos</option>
+                                <option value="Bonecas">Bonecas</option>
+                                <option value="Blocos de Montar">Blocos de Montar</option>
+                                <option value="Jogos Educativos">Jogos Educativos</option>
+                                <option value="Pelúcias">Pelúcias</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="price" class="block text-sm font-medium text-gray-700 mb-1">Preço</label>
+                            <input type="number" step="0.01" id="price" v-model="newToy.price"
+                                class="px-4 py-3 mt-1 w-full rounded-lg border-gray-300 border focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+                                placeholder="R$ 0,00" />
+                        </div>
+                    </div>
+                    <div class="mt-8 flex justify-center gap-4">
+                        <button type="button" @click="createDialog = false"
+                            class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-200">
+                            Cancelar
+                        </button>
+                        <button type="submit"
+                            class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 shadow-md">
+                            Adicionar Brinquedo
+                        </button>
+                    </div>
+                </form>
+            </template>
+        </DialogComponent>
 
-  <section>
-    <DialogComponent v-model="showDialog" title="Adicionar novo brinquedo" @close="showDialog = false">
-      <template #content>
-        <form @submit.prevent="submitForm" class="space-y-4">
-          <div>
-            <label class="block mb-1 font-medium">Nome</label>
-            <input type="text" v-model="form.name" class="w-full p-2 border rounded" required />
-          </div>
+        <!-- Modal de Edição -->
+        <DialogComponent v-model="editDialog" title="Editar Brinquedo">
+            <template #content>
+                <form class="px-6 w-full" @submit.prevent="confirmEdit">
+                    <div class="mb-5">
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nome do Brinquedo</label>
+                        <input type="text" id="name" v-model="currentToy.title"
+                            class="px-4 py-3 mt-1 block w-full border-gray-300 border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-200">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mb-5">
+                        <div>
+                            <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Categoria</label>
+                            <select id="category" v-model="currentToy.category"
+                                class="px-4 py-3 mt-1 w-full rounded-lg border-gray-300 border focus:ring-blue-500 focus:border-blue-500 transition duration-200">
+                                <option value="Brinquedos Eletrônicos">Brinquedos Eletrônicos</option>
+                                <option value="Bonecas">Bonecas</option>
+                                <option value="Blocos de Montar">Blocos de Montar</option>
+                                <option value="Jogos Educativos">Jogos Educativos</option>
+                                <option value="Pelúcias">Pelúcias</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="price" class="block text-sm font-medium text-gray-700 mb-1">Preço</label>
+                            <input type="number" step="0.01" id="price" v-model="currentToy.price"
+                                class="px-4 py-3 mt-1 w-full rounded-lg border-gray-300 border focus:ring-blue-500 focus:border-blue-500 transition duration-200" />
+                        </div>
+                    </div>
+                    <div class="mt-8 flex justify-center gap-4">
+                        <button type="button" @click="editDialog = false"
+                            class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-200">
+                            Cancelar
+                        </button>
+                        <button type="submit"
+                            class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 shadow-md">
+                            Salvar Alterações
+                        </button>
+                    </div>
+                </form>
+            </template>
+        </DialogComponent>
 
-          <div>
-            <label class="block mb-1 font-medium">Descrição</label>
-            <textarea v-model="form.description" rows="3" class="w-full p-2 border rounded" required></textarea>
-          </div>
+        <!-- Modal de Exclusão -->
+        <DialogComponent v-model="deleteDialog" title="Confirmar exclusão">
+            <template #content>
+                <div class="flex flex-col text-center p-6">
+                    <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">Tem certeza que deseja excluir este brinquedo?</h3>
+                    <p class="text-gray-500">A exclusão de <span class="font-bold text-gray-700">{{ currentToy.title }}</span> é irreversível.</p>
+                </div>
+                <div class="flex justify-center gap-4 p-6 pt-0">
+                    <button @click="deleteDialog = false"
+                        class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-200">
+                        Cancelar
+                    </button>
+                    <button @click="confirmDelete"
+                        class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition duration-200 shadow-md">
+                        Confirmar Exclusão
+                    </button>
+                </div>
+            </template>
+        </DialogComponent>
 
-          <div>
-            <label class="block mb-1 font-medium">Preço</label>
-            <input type="number" v-model="form.price" step="0.01" class="w-full p-2 border rounded" required />
-          </div>
-
-          <div>
-            <label for="categories" class="block mb-1 font-medium">Categoria</label>
-            <select v-model="form.categoryId" id="categories" class="w-full p-2 border rounded" required>
-              <option selected>Escolha uma categoria</option>
-              <option v-for="(i, index) in categories" :key="index" :value="i.id">{{ i.name }}</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="block mb-1 font-medium">Imagens (máx. 4)</label>
-            <input type="file" accept="image/*"
-              class="bg-secondary mx-5 mt-2 mb-2 text-center p-4 rounded-2xl text-white focus:bg-blue-700 cursor-pointer" @change="handleImageUpload"
-              :disabled="form.images.length >= 4" />
-            <p class="text-sm text-gray-500 mt-1">Você pode enviar até 4 imagens.</p>
-            <div class="flex gap-2 mt-2 flex-wrap">
-              <div v-for="(img, index) in form.images" :key="index" class="relative w-20 h-20">
-                <img :src="img.preview" class="w-full h-full object-cover rounded" />
-                <button type="button"
-                  class="absolute top-0 right-0 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
-                  @click="removeImage(index)">
-                  ✕
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <button type="submit" class="mt-4 p-2 px-6 bg-secondary hover:bg-blue-700 text-white rounded-xl">
-            Salvar Brinquedo
-          </button>
-        </form>
-      </template>
-    </DialogComponent>
-  </section>
+        <!-- Alertas -->
+        <SuccessAlertComponent v-model="isCreateAlert" title="Sucesso!" description="Brinquedo criado com sucesso!" :timeout="2000"/>
+        <SuccessAlertComponent v-model="isEditAlert" title="Sucesso!" description="Brinquedo editado com sucesso!" :timeout="2000"/>
+        <SuccessAlertComponent v-model="isDeleteAlert" title="Sucesso!" description="Brinquedo deletado com sucesso!" :timeout="2000"/>
+    </main>
 </template>
 
-<script setup lang="ts">
-import { ref, onMounted } from "vue";
-import ToyTable from "./ToyTable.vue";
+<script setup>
+import { ref } from "vue";
 import DialogComponent from "../../../components/DialogComponent.vue";
-import { ToysService } from "../../../services/ToyService";
-import type { IToy } from "../../../interfaces/IToy";
-import type { ICategory } from "../../../interfaces/ICategory";
-import { CategoryService } from "../../../services/CategoryService";
+import ToysTable from "./ToysTable.vue";
+import SuccessAlertComponent from "../../../components/alerts/SuccessAlertComponent.vue";
 
-const toysService = new ToysService("/toys");
-const categoryService = new CategoryService("/categories");
-const toys = ref<IToy[]>([]);
-const categories = ref<ICategory[]>([]);
-const showDialog = ref<boolean>(false);
+const toys = ref([
+  {
+    title: 'Carrinho de Controle Remoto',
+    category: 'Brinquedos Eletrônicos',
+    price: 129.90
+  },
+  {
+    title: 'Boneca Interativa',
+    category: 'Bonecas',
+    price: 89.99
+  },
+  {
+    title: 'Lego Arquitetura',
+    category: 'Blocos de Montar',
+    price: 199.50
+  },
+  {
+    title: 'Quebra-Cabeça 1000 peças',
+    category: 'Jogos Educativos',
+    price: 59.90
+  },
+  {
+    title: 'Pelúcia Urso Gigante',
+    category: 'Pelúcias',
+    price: 119.00
+  }
+]);
 
-const form = ref<IToy>({
-  name: "",
-  description: "",
-  price: 0,
-  categoryId: 0,
-  images: [],
+const createDialog = ref(false);
+const editDialog = ref(false);
+const deleteDialog = ref(false);
+const isCreateAlert = ref(false);
+const isEditAlert = ref(false);
+const isDeleteAlert = ref(false);
+
+const newToy = ref({
+  title: '',
+  category: 'Brinquedos Eletrônicos',
+  price: 0
 });
 
-const handleImageUpload = (event: Event) => {
-  const target = event.target as HTMLInputElement;
-  const files = target.files;
-  if (!files || form.value.images.length >= 4) return;
-
-  for (let i = 0; i < files.length && form.value.images.length < 4; i++) {
-    const file = files[i];
-    const preview = URL.createObjectURL(file);
-    form.value.images.push({ file, preview });
-  }
-};
-
-const removeImage = (index: number) => {
-  form.value.images.splice(index, 1);
-};
-
-const submitForm = async () => {
-  const formData = new FormData();
-  formData.append("name", form.value.name);
-  formData.append("description", form.value.description);
-  formData.append("price", String(form.value.price));
-  formData.append("categoryId", String(form.value.categoryId));
-
-  form.value.images.forEach((img) => {
-    formData.append("files", img.file);
-  });
-
-  try {
-    const response = await toysService.create(formData);
-    if (response.status === 201) {
-      alert("Brinquedo adicionado com sucesso!");
-      toys.value.push(response.data);
-      showDialog.value = false;
-      form.value = {
-        name: "",
-        description: "",
-        price: 0,
-        categoryId: 0,
-        images: [],
-      };
-    } else {
-      console.error("Erro ao adicionar brinquedo:", response);
-    }
-  } catch (error) {
-    console.error("Erro no envio:", error);
-  }
-};
-
-onMounted(async () => {
-  try {
-    const toysResponse = await toysService.getAll();
-    const categoryResponse = await categoryService.getCategories();
-    if (toysResponse.status === 200) {
-      toys.value = toysResponse.data;
-      categories.value = categoryResponse.data;
-      console.log(categories.value)
-      console.log(toys.value)
-    } else {
-      console.error("Erro ao buscar os brinquedos:", toysResponse.status);
-      console.log("Erro ao buscar as categorias:", categories.value);
-    }
-  } catch (error) {
-    console.error("Erro ao carregar brinquedos:", error);
-  }
+const currentToy = ref({
+  title: '',
+  category: '',
+  price: 0
 });
+
+const handleCreate = () => {
+  newToy.value = { title: '', category: 'Brinquedos Eletrônicos', price: 0 };
+  createDialog.value = true;
+};
+
+const handleEdit = (toy) => {
+  currentToy.value = { ...toy };
+  editDialog.value = true;
+};
+
+const handleDelete = (toy) => {
+  currentToy.value = { ...toy };
+  deleteDialog.value = true;
+};
+
+const confirmCreate = () => {
+  toys.value.push({ ...newToy.value });
+  createDialog.value = false;
+  isCreateAlert.value = true;
+};
+
+const confirmEdit = () => {
+  const index = toys.value.findIndex(t => t.title === currentToy.value.title);
+  if (index !== -1) {
+    toys.value[index] = { ...currentToy.value };
+  }
+  editDialog.value = false;
+  isEditAlert.value = true;
+};
+
+const confirmDelete = () => {
+  toys.value = toys.value.filter(t => t.title !== currentToy.value.title);
+  deleteDialog.value = false;
+  isDeleteAlert.value = true;
+};
 </script>
+
