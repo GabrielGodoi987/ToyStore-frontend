@@ -15,7 +15,7 @@ export class ToysService {
   async getAll() {
     try {
       const response = await this.api.get(this.route);
-      return response.data;
+      return response;
     } catch (error) {
       console.error("Error fetching categories:", error);
       throw error;
@@ -25,7 +25,7 @@ export class ToysService {
   async getById(id: number) {
     try {
       const response = await this.api.get(`${this.route}/${id}`);
-      return response.data;
+      return response;
     } catch (error) {
       console.error("Error fetching category by ID:", error);
       throw error;
@@ -33,7 +33,7 @@ export class ToysService {
   }
 
   // devemos madar o cockie do usuario para o backend
-  async create(data: IUser) {
+  async create(data: FormData) {
     return await this.api.post(this.route, data, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -53,7 +53,7 @@ export class ToysService {
   async delete(id: number) {
     try {
       const response = await this.api.delete(`${this.route}/${id}`);
-      return response.data;
+      return response;
     } catch (error) {
       console.error("Error deleting category:", error);
       throw error;
@@ -63,7 +63,7 @@ export class ToysService {
   async deleteMany(ids: number[]) {
     try {
       const response = await this.api.delete(this.route, { data: ids });
-      return response.data;
+      return response;
     } catch (error) {
       console.error("Error deleting categories:", error);
       throw error;

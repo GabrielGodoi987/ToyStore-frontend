@@ -62,6 +62,7 @@
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <button @click="$emit('edit', user)" class="text-blue-600 hover:text-blue-900 mr-4">✏️ Editar</button>
                         <button @click="$emit('delete', user)" class="text-red-600 hover:text-red-900">🗑️ Excluir</button>
+
                     </td>
                 </tr>
             </tbody>

@@ -220,3 +220,4 @@ const confirmDelete = () => {
   isDeleteAlert.value = true;
 };
 </script>
+

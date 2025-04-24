@@ -287,4 +287,3 @@ const confirmDelete = () => {
   deleteDialog.value = false;
   isDeleteAlert.value = true;
 };
-</script>

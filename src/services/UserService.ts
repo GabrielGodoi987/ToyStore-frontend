@@ -1,6 +1,5 @@
 import type { AxiosInstance } from "axios";
 import { axiosApi } from "../boot/Axios";
-import type { IUser } from "../interfaces/IUser";
 
 export class UserService {
   private api: AxiosInstance;
@@ -13,9 +12,8 @@ export class UserService {
   async getAll() {
     try {
       const response = await this.api.get(this.route);
-      return response.data;
+      return response;
     } catch (error) {
-      console.error("Error fetching categories:", error);
       throw error;
     }
   }
@@ -23,23 +21,28 @@ export class UserService {
   async getById(id: number) {
     try {
       const response = await this.api.get(`${this.route}/${id}`);
-      return response.data;
+      return response;
     } catch (error) {
-      console.error("Error fetching category by ID:", error);
       throw error;
     }
   }
 
   // devemos madar o cockie do usuario para o backend
-  async create(data: IUser) {
-    return await this.api.post(this.route, data, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+  async create(data: FormData) {
+    try {
+      const response = await this.api.post(this.route, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response;
+    } catch (error) {
+      console.error("Error creating category:", error);
+      throw error;
+    }
   }
 
-  async update(id: number, data: IUser) {
+  async update(id: number, data: FormData) {
     return await this.api.put(`${this.route}/${id}`, data, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -51,7 +54,7 @@ export class UserService {
   async delete(id: number) {
     try {
       const response = await this.api.delete(`${this.route}/${id}`);
-      return response.data;
+      return response;
     } catch (error) {
       console.error("Error deleting category:", error);
       throw error;
@@ -63,7 +66,6 @@ export class UserService {
       const response = await this.api.delete(this.route, { data: ids });
       return response.data;
     } catch (error) {
-      console.error("Error deleting categories:", error);
       throw error;
     }
   }

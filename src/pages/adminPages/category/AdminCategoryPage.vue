@@ -226,4 +226,5 @@ onMounted(async () => {
     console.error("Erro ao buscar categorias:", error);
   }
 });
+
 </script>
